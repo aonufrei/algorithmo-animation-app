@@ -1,0 +1,15 @@
+$back-color: #1e87ff;
+
+*{
+    box-sizing: border-box;
+}
+
+
+body{
+    height: 100vh;
+    background-color: $back-color;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
