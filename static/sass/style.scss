@@ -1,15 +1,71 @@
-$back-color: #1e87ff;
+$back-a: #4A4063;
+$color-a: #BFACC8;
+$back-b: #fff;
+$color-b: #000;
+$back-c: #BFACC8;
+$color-c: #4A4063;
+$btn-color: #783F8E;
 
 *{
     box-sizing: border-box;
 }
 
-
 body{
-    height: 100vh;
-    background-color: $back-color;
+    margin: 0;
+}
 
+
+@mixin section-settings {
+    position: relative;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+
+.section-a{
+    @include section-settings();
+    background-color: $back-a;
+    color: $color-a;
+    
+    .section-title{
+        color: $color-a;
+    }
+}
+
+.section-b{
+    @include section-settings();
+    background-color: $back-b;
+    color: $color-b;
+
+    .section-title{
+        color: $color-b;
+    }
+}
+
+.section-c{
+    @include section-settings();
+    background-color: $back-c;
+    color: $color-c;
+
+    .section-title{
+        color: $color-c;
+    }
+}
+
+.next-step{
+    color: white;
+    border-radius: 15px;
+    position: absolute;
+
+    background-color: $btn-color;
+
+    border: none;
+    padding: 1em 2em;
+    font-size: 1em;
+
+    bottom: 10px;
+    right: 10px;
 }
