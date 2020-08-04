@@ -8,12 +8,11 @@ from . exceptions import UnknownAlgorithmException
 
 def build_frame(divider:Separator):
     buffer_image = Image.new('RGBA', ( divider.image_width, divider.image_height ), (0, 0, 0, 0))
-    #print(divider.row_arrays)
+
     for sector_y in range(len(divider.row_arrays)):
         for sector_x in range(divider.columns):
-            #print( "column {0} row {1} ".format(divider.row_arrays[sector_y][sector_x], sector_y) )
             sector = divider.get_sector(sector_y,divider.row_arrays[sector_y][sector_x])
-            #print(sector)
+
             buffer_image.paste(sector['region'], (sector_x*divider.sector_width, sector_y*divider.sector_width, (sector_x+1)*divider.sector_width, (sector_y+1)*divider.sector_width))
 
     return buffer_image
