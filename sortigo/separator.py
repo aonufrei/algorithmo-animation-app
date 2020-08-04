@@ -43,28 +43,16 @@ class Separator:
     def init_row_arrays(self):
         self.row_arrays = [[x for x in range(self.columns)] for y in range(self.rows)]
 
-
-    def detect_sector(self, pos_x:int, pos_y:int):
-        sector_x = pos_x//self.sector_width
-        sector_y = pos_y//self.sector_height
-        return dict(x=sector_x, y=sector_y)
-
-    def get_local_coords(self, pos_x:int, pos_y:int):
-        sector = self.detect_sector(pos_x, pos_y)
-        local_x = pos_x - sector['x'] * self.sector_width
-        local_y = pos_y - sector['y'] * self.sector_height
-        return dict(x=local_x, y=local_y)
+    def get_sector(self, row, column):
+        sector_pos_x = column * self.sector_width
+        sector_pos_y = row * self.sector_height
+        pos_size = (sector_pos_x, sector_pos_y, sector_pos_x+self.sector_width, sector_pos_y+self.sector_height)
+        return dict(region=self.atlas.crop(pos_size), pos_size=pos_size)
 
     def shuffle_row_arrays(self): 
         from random import shuffle
         for x in range(len(self.row_arrays)):
             shuffle(self.row_arrays[x])
-
-    def get_selected_pixel(self, sector:dict, local_pos:dict):
-        selected_x = sector['x']*self.sector_width + local_pos['x']
-        selected_y = sector['y']*self.sector_height + local_pos['y']
-    #    print("{0} {1}".format(selected_x, selected_y))
-        return self.atlas.getpixel( (selected_x, selected_y) )
     
     def check_int_variable_type(self, variable):
         if type(variable) != int:
@@ -73,11 +61,6 @@ class Separator:
     def check_if_none(self, variable):
         if variable == None:
             raise NullSettingsException("This variable cannot be Null")
-
-    def clean_all(self):
-        self.image = None
-        self.atlas = None
-        self.settings = None
 
         
 
