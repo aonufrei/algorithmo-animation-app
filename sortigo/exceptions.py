@@ -7,5 +7,11 @@ class NullSettingsException(SettingsError):
     #Empty settings value exception
     pass
 
-class UnknownAlgorithmSettingsException(SettingsError):
-    
+class UnknownAlgorithmException(SettingsError):
+    #Unknown algorithm was specified in settings
+    pass 
+
+class BadSettingsTypeException(SettingsError):
+    #Unknown algorithm was specified in settings
+    pass 
+
