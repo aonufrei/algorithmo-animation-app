@@ -30,9 +30,9 @@ def build_animation(image_path:str, settings:dict, video_name:str, extention:str
         raise UnknownAlgorithmException("Unknown or undefined type of algorithm was specified") 
     
     steps = []
+    
     for row in sep.row_arrays:
-        algorithm.set_array(row)     
-        steps.append( algorithm.get_all_iterations() )
+        steps.append(algorithm.get_all_iterations(row))
 
     import numpy 
     i = 0
