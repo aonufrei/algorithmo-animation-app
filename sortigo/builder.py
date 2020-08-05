@@ -13,7 +13,7 @@ def build_frame(divider:Separator):
         for sector_x in range(divider.columns):
             sector = divider.get_sector(sector_y,divider.row_arrays[sector_y][sector_x])
 
-            buffer_image.paste(sector['region'], (sector_x*divider.sector_width, sector_y*divider.sector_width, (sector_x+1)*divider.sector_width, (sector_y+1)*divider.sector_width))
+            buffer_image.paste(sector['region'], (sector_x*divider.sector_width, sector_y*divider.sector_height, (sector_x+1)*divider.sector_width, (sector_y+1)*divider.sector_height))
 
     return buffer_image
 
@@ -36,19 +36,15 @@ def build_animation(image_path:str, settings:dict, video_name:str, extention:str
     for row in sep.row_arrays:
         steps.append(algorithm.get_all_iterations(row))
 
+    import numpy 
 
-    import os
-
-    i = 0
     for phase in range(len(steps[0])):
         for row in range(len(sep.row_arrays)):
             sep.row_arrays[row] = steps[row][phase]
         frame = build_frame(sep)
-        filepath = 'frames/frame_{0}.png'.format(i)
-        frame.save(filepath, "PNG")
-        out.write( cv2.imread(filepath) )
-        os.remove(filepath)
-        i+=1
+
+        opencv_image = cv2.cvtColor(numpy.array(frame), cv2.COLOR_RGB2BGR)
+        out.write( opencv_image )
 
     out.release()
 
