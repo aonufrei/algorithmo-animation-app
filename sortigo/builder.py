@@ -1,25 +1,30 @@
-from PIL import Image, ImageDraw
+from PIL import Image
 
 import cv2
 
 from . separator import Separator
-from . sorting import Sorting, BubbleSemiSort
+from . sorting import BubbleSemiSort
 from . exceptions import UnknownAlgorithmException
 
 def build_frame(divider:Separator):
-    buffer_image = Image.new('RGBA', ( divider.image_width, divider.image_height ), (0, 0, 0, 0))
+    buffer_image = Image.new('RGBA', ( divider.image_width, divider.image_height ), (255, 255, 255, 255))
 
-    for sector_y in range(len(divider.row_arrays)):
-        for sector_x in range(divider.columns):
-            sector = divider.get_sector(sector_y,divider.row_arrays[sector_y][sector_x])
+    #print('{} {}'.format(divider.rows, divider.columns))
+    for segment_y in range(divider.rows):
+        current_width = 0
+        current_height = segment_y*divider.segment_height
+        for segment_x in range(divider.columns):
+            segment = divider.get_segment(segment_x, segment_y)
+            #current_height += segment['pos_size'][3] - segment['pos_size'][1]
+            buffer_image.paste(segment['region'], (current_width, current_height))
+            current_width += segment['pos_size'][2] - segment['pos_size'][0]
 
-            buffer_image.paste(sector['region'], (sector_x*divider.sector_width, sector_y*divider.sector_height, (sector_x+1)*divider.sector_width, (sector_y+1)*divider.sector_height))
 
     return buffer_image
 
-def build_animation(image_path:str, settings:dict, video_name:str, extention:str):
-    import time
+import time, numpy
 
+def build_animation(image_path:str, settings:dict, video_name:str, extention:str):
     start_time = time.time()
     sep = Separator(image_path, settings)
 
@@ -36,16 +41,26 @@ def build_animation(image_path:str, settings:dict, video_name:str, extention:str
     for row in sep.row_arrays:
         steps.append(algorithm.get_all_iterations(row))
 
-    import numpy 
+    def add_frame(frame, repeat = 1):
+        for x in range(repeat):
+            opencv_image = cv2.cvtColor(numpy.array(frame), cv2.COLOR_RGB2BGR)
+            out.write( opencv_image )
+    
+    frame = build_frame(sep)
+    add_frame(frame, repeat=5)
 
     for phase in range(len(steps[0])):
         for row in range(len(sep.row_arrays)):
             sep.row_arrays[row] = steps[row][phase]
         frame = build_frame(sep)
+        add_frame(frame, repeat = 1 if phase != len(steps[0])-1 else 5)
+        '''
+        frame = build_frame(sep)
 
         opencv_image = cv2.cvtColor(numpy.array(frame), cv2.COLOR_RGB2BGR)
         out.write( opencv_image )
+        '''
 
     out.release()
 
-    print('It took ' + str(time.time() - start_time))
+    print('It tooks ' + str(time.time() - start_time))

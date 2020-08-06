@@ -25,7 +25,8 @@ class BubbleSemiSort():
     @staticmethod
     def get_all_iterations(array:list):
         result_iterations = []
-        buffer = array
+        buffer = array[:]
+        result_iterations.append(buffer[:])
         it = 0
         for it in range(len(buffer)-1-it):
             iteration = BubbleSemiSort.sort_iteration(buffer)

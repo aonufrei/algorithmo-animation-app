@@ -1,6 +1,6 @@
-from flask import Flask, url_for, request, redirect, render_template
+from flask import Flask, url_for, request, render_template
 from werkzeug.utils import secure_filename
-from sortigo import processor
+from sortigo import separator
 import os
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def upload():
         filename = secure_filename(file.filename)
         print(APP_ROOT)
         file.save(APP_ROOT + url_for('static', filename="images/") + filename)
-        processor.Separator(APP_ROOT + url_for('static', filename='images/' + filename))
+        separator.Separator(APP_ROOT + url_for('static', filename='images/' + filename), None)
 
     return render_template('index.html')
 

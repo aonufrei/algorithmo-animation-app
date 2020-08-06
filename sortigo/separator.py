@@ -9,10 +9,11 @@ from . exceptions import NullSettingsException
 #rows
 
 class Separator:
-    def __init__(self, image:str, settings:dict):
+
+    def __init__(self, image: str, settings: dict):
         self.image = Image.open(image)
         self.atlas = self.image.convert('RGBA')
-        
+     
         self.settings = settings
 
         self.init_settings(settings)
@@ -37,22 +38,33 @@ class Separator:
         self.check_int_variable_type(self.image_height)
         self.check_if_none(self.image_height)
         
-        self.sector_width = self.image_width // self.columns
-        self.sector_height = self.image_height // self.rows
+        self.segment_width = self.image_width // self.columns
+        self.segment_height = self.image_height // self.rows
         
-    def init_row_arrays(self):
-        self.row_arrays = [[x for x in range(self.columns)] for y in range(self.rows)]
+    def create_segment(self, x: int, y: int):
+        #print("{} {}".format(x, y))
+        segment_x_edge = (x+1) * self.segment_width  if x != self.columns-1 else self.image_width  
+        segment_y_edge = (y+1) * self.segment_height if y != self.rows-1    else self.image_height
 
-    def get_sector(self, row, column):
-        sector_pos_x = column * self.sector_width
-        sector_pos_y = row * self.sector_height
-        pos_size = (sector_pos_x, sector_pos_y, sector_pos_x+self.sector_width, sector_pos_y+self.sector_height)
-        return dict(region=self.atlas.crop(pos_size), pos_size=pos_size)
+        return [x, (x*self.segment_width, y*self.segment_height, segment_x_edge, segment_y_edge)]
+
+    def init_row_arrays(self):
+        self.row_arrays = [[self.create_segment(x, y) for x in range(self.columns)] for y in range(self.rows)]
+        #print(self.row_arrays)
+
+    def get_segment(self, x: int, y: int):
+        #print(self.row_arrays[y][x])
+
+        segment = self.row_arrays[y][x][1]
+        #print(segment)
+        return dict(region=self.atlas.crop(segment), pos_size=segment)
 
     def shuffle_row_arrays(self): 
         from random import shuffle
-        for x in range(len(self.row_arrays)):
+        for x in range(self.columns):
             shuffle(self.row_arrays[x])
+        #print(self.row_arrays)
+
     
     def check_int_variable_type(self, variable):
         if type(variable) != int:
