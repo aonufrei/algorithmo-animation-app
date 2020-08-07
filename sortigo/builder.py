@@ -64,3 +64,5 @@ def build_animation(image_path:str, settings:dict, video_name:str, extention:str
     out.release()
 
     print('It tooks ' + str(time.time() - start_time))
+
+    return video_name + '.' + extention
