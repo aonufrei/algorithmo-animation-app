@@ -1,7 +1,10 @@
 from flask import Flask, url_for, request, render_template
 from werkzeug.utils import secure_filename
-from sortigo import separator
-import os
+
+from sortigo.builder import build_animation
+
+import os, threading
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -20,11 +23,24 @@ def home():
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['user_image']
+
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        print(APP_ROOT)
-        file.save(APP_ROOT + url_for('static', filename="images/") + filename)
-        separator.Separator(APP_ROOT + url_for('static', filename='images/' + filename), None)
+        filename += datetime.now()
+        full_image_path = APP_ROOT + url_for('static', filename='images/' + filename)
+        #print(APP_ROOT)
+        himg  = request.form['image_height'  ]
+        wimg  = request.form['image_width'   ]
+        horiz = request.form['hseparations'  ] 
+        vert  = request.form['vseparations'  ]
+        anim  = request.form['animation_mode']
+
+        settings = dict(image_height=himg, image_width=wimg, columns=horiz, rows=vert, algorithm=anim)
+
+        file.save(full_image_path)
+
+        build_animation(full_image_path, settings, filename, 'avi')
+
 
     return render_template('index.html')
 
