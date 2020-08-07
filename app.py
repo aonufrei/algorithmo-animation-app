@@ -17,7 +17,7 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html')
+    return render_template('step1.html')
 
         
 @app.route('/upload', methods=['POST'])
@@ -39,7 +39,7 @@ def upload():
 
         file.save(full_image_path)
 
-        build_animation(full_image_path, settings, filename, 'avi')
+        threading.Thread(target=build_animation, args=(full_image_path, settings, filename, 'avi'))
 
 
     return render_template('index.html')

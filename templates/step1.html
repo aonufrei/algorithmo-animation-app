@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Step 1: Load data{% endblock %}
+
+{% block content %}
+    <section class='section-a'>
+        <form action="/upload" method='POST'>
+            <Label>Image width: <input type="number" name="image_width"></Label>
+            <Label>Image height: <input type="number" name="image_height"></Label>
+            <label>Number of columns: <input type="range" name="columns_number" value=10 min=10 max=50 step=10></label>
+            <label>Number of rows: <input type="range" name="rows_number" value=10 min=10 max=50 step=10></label>
+            <label>Image: <input type="file"  name="user_image"></label>
+        </form>
+
+    </section>
+{% endblock %}
