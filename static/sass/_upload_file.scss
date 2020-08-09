@@ -1,0 +1,24 @@
+.form-container{
+    background-color: white;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+    color: #4A4063;
+    border-radius: 15px;
+
+    input, select{
+        margin-bottom: 1em;
+        padding: 0.5em;
+    }
+
+
+}
+
+.error-label{
+    color:red;
+    display:block;
+    font-size: 0.5em;
+
+}

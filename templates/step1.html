@@ -3,18 +3,20 @@
 
 {% block content %}
     <section class='section-a'>
-        <form action="/" method='POST' id='upload_form' enctype="multipart/form-data">
-            <Label>Image width: <input type="number" name="image_width">{% for error in form.image_width.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</Label>
-            <Label>Image height: <input type="number" name="image_height">{% for error in form.image_height.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</Label>
-            <label>Number of columns: <input type="range" name="image_columns" value=10 min=10 max=50 step=10>{% for error in form.image_columns.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</label>
-            <label>Number of rows: <input type="range" name="Image_rows" value=10 min=10 max=50 step=10>{% for error in form.image_rows.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</label>
+        <form action="/" method='POST' id='upload_form' class="form-container" enctype="multipart/form-data">
+            <h1>Please, fill the form below</h1>
+            <Label>Image width: <input type="number" name="image_width"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></Label>
+            <Label>Image height: <input type="number" name="image_height"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></Label>
+            <label>Number of columns: <input type="range" name="image_columns" value=10 min=10 max=50 step=10></label>
+            <label>Number of rows: <input type="range" name="Image_rows" value=10 min=10 max=50 step=10></label>
             
-            <label for='algor'>Algorithm</label>
+            <label for='algor'>Algorithm: 
             <select name="algorithm" id="algor" form="upload_form">
                 <option value="Bubble">bubble</option>
               </select>
+            </label>
             
-            <label>Image: <input type="file"  name="user_image">{% for error in form.user_image.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</label>
+            <label>Image: <input type="file"  name="user_image"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></label>
             
             <input type="submit" value="Get Animation">
         </form>
