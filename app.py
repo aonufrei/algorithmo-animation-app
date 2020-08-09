@@ -10,20 +10,17 @@ from forms import ImageUploaderForm
 
 app = Flask(__name__)
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'bmp'}
+
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/uploads')
 app.config['SECRET_KEY'] = 'secret key'
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     form = ImageUploaderForm()
 
-    if form.validate_on_submit() and allowed_file(request.file['user_image']):
+    if form.validate_on_submit():
         settings = dict(image_height=form.image_height, image_width=form.image_width, columns=form.image_columns, rows=form.image_rows, algorithm=form.algorithm)
+        print(settings)
         image = secure_filename(form.user_image.data.filename)
         image_path = os.path.join(app.config['UPLOAD_FOLDER'],  str(datetime.now()) + image.filename)
         image.save(image_path)
@@ -33,6 +30,10 @@ def home():
     return render_template('step1.html', form=form)
 
    
+@app.route('/then', methods=['GET'])
+def then():
+    return 'hello'
+
 
 
 if __name__ == "__main__":
