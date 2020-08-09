@@ -26,6 +26,8 @@ def home():
         image.save(image_path)
         build_animation(image_path, settings, str(datetime.now()), '.avi')
         return 'processed'
+    else:
+        print('validation failed')
 
     return render_template('step1.html', form=form)
 
