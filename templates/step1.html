@@ -3,7 +3,7 @@
 
 {% block content %}
     <section class='section-a'>
-        <form action="/upload" method='POST' id='upload_form'>
+        <form action="/upload" method='POST' id='upload_form' enctype="multipart/form-data">
             <Label>Image width: <input type="number" name="image_width">{% for error in form.image_width.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</Label>
             <Label>Image height: <input type="number" name="image_height">{% for error in form.image_height.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</Label>
             <label>Number of columns: <input type="range" name="image_columns" value=10 min=10 max=50 step=10>{% for error in form.image_columns.errors %} <label class='error_label'>{{error}}</label> {% endfor %}</label>
