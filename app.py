@@ -6,10 +6,12 @@ from sortigo.builder import build_animation
 import os, threading
 from datetime import datetime
 
+from forms import ImageUploaderForm
+
 app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'bmp'}
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/uploads')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -22,27 +24,17 @@ def home():
         
 @app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files['user_image']
+    
+    form = ImageUploaderForm()
 
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filename += datetime.now()
-        full_image_path = APP_ROOT + url_for('static', filename='images/' + filename)
-        #print(APP_ROOT)
-        himg  = request.form['image_height'  ]
-        wimg  = request.form['image_width'   ]
-        horiz = request.form['hseparations'  ] 
-        vert  = request.form['vseparations'  ]
-        anim  = request.form['animation_mode']
+    if form.validate_on_submit() and allowed_file(request.file['user_image']):
+        settings = dict(image_height=form.image_height, image_width=form.image_width, columns=form.image_columns, rows=form.image_rows, algorithm=form.algorithm)
+        image = secure_filename(form.user_image.data.filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'],  str(datetime.now()) + image.filename)
+        image.save(image_path)
+        build_animation(image_path, settings, str(datetime.now()), '.avi')
 
-        settings = dict(image_height=himg, image_width=wimg, columns=horiz, rows=vert, algorithm=anim)
-
-        file.save(full_image_path)
-
-        threading.Thread(target=build_animation, args=(full_image_path, settings, filename, 'avi'))
-
-
-    return render_template('index.html')
+    return 'prossesed'
 
 
 if __name__ == "__main__":
