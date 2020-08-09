@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'bmp'}
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/uploads')
+app.config['SECRET_KEY'] = 'secret key'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -19,7 +20,8 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('step1.html')
+    form = ImageUploaderForm()
+    return render_template('step1.html', form=form)
 
         
 @app.route('/upload', methods=['POST'])
@@ -33,7 +35,8 @@ def upload():
         image_path = os.path.join(app.config['UPLOAD_FOLDER'],  str(datetime.now()) + image.filename)
         image.save(image_path)
         build_animation(image_path, settings, str(datetime.now()), '.avi')
-
+    else :
+        render_template('step1.html', form=form)
     return 'prossesed'
 
 
