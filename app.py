@@ -18,15 +18,8 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    form = ImageUploaderForm()
-    return render_template('step1.html', form=form)
-
-        
-@app.route('/upload', methods=['POST'])
-def upload():
-    
     form = ImageUploaderForm()
 
     if form.validate_on_submit() and allowed_file(request.file['user_image']):
@@ -35,9 +28,11 @@ def upload():
         image_path = os.path.join(app.config['UPLOAD_FOLDER'],  str(datetime.now()) + image.filename)
         image.save(image_path)
         build_animation(image_path, settings, str(datetime.now()), '.avi')
-    else :
-        render_template('step1.html', form=form)
-    return 'prossesed'
+        return 'processed'
+
+    return render_template('step1.html', form=form)
+
+   
 
 
 if __name__ == "__main__":
