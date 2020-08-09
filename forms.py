@@ -10,7 +10,7 @@ class ImageUploaderForm(FlaskForm):
     image_height = IntegerField('image_height', validators=[InputRequired('Please, input image width')])
 
     image_columns = IntegerField('image_columns', validators=[InputRequired('Please, input image width'), NumberRange(min=10, max=50)])
-    image_rows = IntegerField('image_columns', validators=[InputRequired('Please, input image width'), NumberRange(min=10, max=50)])
+    image_rows = IntegerField('image_rows', validators=[InputRequired('Please, input image width'), NumberRange(min=10, max=50)])
 
     user_image = FileField('user_image', validators=[FileRequired('Please, add image to process'), FileAllowed(file_formats, 'You can upload files of type png or jpg only')])
 
