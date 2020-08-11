@@ -3,23 +3,23 @@
 
 {% block content %}
     <section class='section-a'>
-        <form action="/" method='POST' id='upload_form' class="form-container" enctype="multipart/form-data">
+        <form method='POST' id='upload_form' class="form-container" enctype="multipart/form-data">
             <h1>Please, fill the form below</h1>
             <Label>Image width: <input type="number" name="image_width"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></Label>
             <Label>Image height: <input type="number" name="image_height"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></Label>
-            <label>Number of columns: <input type="range" name="image_columns" value=10 min=10 max=50 step=10></label>
-            <label>Number of rows: <input type="range" name="Image_rows" value=10 min=10 max=50 step=10></label>
+            <label>Number of columns: <input type="number" name="image_columns" value=10 min=10 max=50 step=10></label>
+            <label>Number of rows: <input type="number" name="image_rows" value=10 min=10 max=50 step=10></label>
             {{'*' + form.image_columns.errors[0] if form.image_columns.errors[0]}}
             {{'*' + form.image_rows.errors[0] if form.image_rows.errors[0]}}
 
-            <label for='algor'>Algorithm: 
-            <select name="algorithm" id="algor" form="upload_form">
+            <label >Algorithm: 
+            <select name="algorithm">
                 <option value="Bubble">bubble</option>
               </select>
             </label>
-            {{'*' + form.algorithm.errors[0] if form.algorithm.errors[0] == '' or form.algorithm.errors[0] == None}}
+            {{'*' + form.algorithm.errors[0] if form.algorithm.errors[0] == '' or form.algorithm.errors[0] == None }}
             
-            <label>Image: <input type="file"  name="user_image"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></label>
+            <label>Image: <input type="file" name="user_image"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></label>
             
             <input type="submit" value="Get Animation">
         </form>

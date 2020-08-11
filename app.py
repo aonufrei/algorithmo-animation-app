@@ -3,39 +3,50 @@ from werkzeug.utils import secure_filename
 
 from sortigo.builder import build_animation
 
-import os, threading
+import os
 from datetime import datetime
 
 from forms import ImageUploaderForm
+from werkzeug.datastructures import CombinedMultiDict
 
 app = Flask(__name__)
 
-
-app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/uploads')
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                           os.path.join('static', 'uploads'))
 app.config['SECRET_KEY'] = 'secret key'
+
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.mkdir(app.config['UPLOAD_FOLDER'])
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    form = ImageUploaderForm()
+    form = ImageUploaderForm(CombinedMultiDict((request.files, request.form)), meta={'csrf': False})
 
-    if form.validate_on_submit():
-        settings = dict(image_height=form.image_height, image_width=form.image_width, columns=form.image_columns, rows=form.image_rows, algorithm=form.algorithm)
-        print(settings)
-        image = secure_filename(form.user_image.data.filename)
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'],  str(datetime.now()) + image.filename)
-        image.save(image_path)
-        build_animation(image_path, settings, str(datetime.now()), '.avi')
-        return 'processed'
-    else:
-        print('validation failed')
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            settings = dict(image_height=form.image_height.data, image_width=form.image_width.data,
+                            columns=form.image_columns.data, rows=form.image_rows.data,
+                            algorithm=form.algorithm.data)
+
+            f = form.user_image.data
+            name = secure_filename(f.filename)
+            name = datetime.now().strftime('%d%m%Y%H%M%S') + name
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
+            print(image_path)
+            f.save(image_path)
+            build_animation(image_path, settings, str(image_path), '.avi')
+            return 'processed'
+        else:
+            print(form.errors)
+            print('validation failed')
 
     return render_template('step1.html', form=form)
 
-   
+
 @app.route('/then', methods=['GET'])
 def then():
     return 'hello'
-
 
 
 if __name__ == "__main__":
