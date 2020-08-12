@@ -57,7 +57,7 @@ def build_gif_animation(image_path: str, settings: dict, anim_name: str, output:
     return result_anim_name
 
 
-def build_animation(image_path: str, settings: dict, video_name: str, extention: str, output: str):
+def build_animation(image_path: str, settings: dict, video_name: str, extention: str, output: str, duration=2):
     start_time = time.time()
     sep = Separator(image_path, settings)
 
@@ -89,8 +89,8 @@ def build_animation(image_path: str, settings: dict, video_name: str, extention:
         for row in range(len(sep.row_arrays)):
             sep.row_arrays[row] = steps[row][phase]
         frame = build_frame(sep)
-        add_frame(frame, repeat = 1 if phase != len(steps[0])-1 else 5)
-
+        repeat_rate = duration*30 // sep.columns
+        add_frame(frame, repeat=repeat_rate if phase != len(steps[0])-1 else repeat_rate*2)
     out.release()
 
     print('It tooks ' + str(time.time() - start_time))
