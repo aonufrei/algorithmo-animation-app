@@ -63,7 +63,7 @@ def build_animation(image_path: str, settings: dict, video_name: str, extention:
 
     result_video = video_name + '.' + extention
 
-    out = cv2.VideoWriter(os.path.join(output, result_video), cv2.VideoWriter_fourcc(*'DIVX'),
+    out = cv2.VideoWriter(os.path.join(output, result_video), cv2.VideoWriter_fourcc(*'X264'),
                           30, (sep.image_width, sep.image_height))
 
     algorithm = None

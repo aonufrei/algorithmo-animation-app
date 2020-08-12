@@ -34,7 +34,7 @@ def home():
             name = code + secure_filename(f.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
             f.save(image_path)
-            anim = build_animation(image_path, settings, code, 'avi', app.config['UPLOAD_FOLDER'])
+            anim = build_animation(image_path, settings, code, 'mp4', app.config['UPLOAD_FOLDER'])
             session['result'] = dict(image=name, anim=anim, settings=settings)
             return 'processed'
         else:
