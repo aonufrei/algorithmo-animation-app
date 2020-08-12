@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, render_template
+from flask import Flask, url_for, request, render_template, session
 from werkzeug.utils import secure_filename
 
 from sortigo.builder import build_animation
@@ -29,13 +29,13 @@ def home():
                             columns=form.image_columns.data, rows=form.image_rows.data,
                             algorithm=form.algorithm.data)
 
+            code = datetime.now().strftime('%d%m%Y%H%M%S')
             f = form.user_image.data
-            name = secure_filename(f.filename)
-            name = datetime.now().strftime('%d%m%Y%H%M%S') + name
+            name = code + secure_filename(f.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
-            print(image_path)
             f.save(image_path)
-            build_animation(image_path, settings, str(image_path), '.avi')
+            anim = build_animation(image_path, settings, code, 'avi', app.config['UPLOAD_FOLDER'])
+            session['result'] = dict(image=name, anim=anim, settings=settings)
             return 'processed'
         else:
             print(form.errors)
