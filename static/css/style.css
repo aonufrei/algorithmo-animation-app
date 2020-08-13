@@ -29,6 +29,10 @@
   font-size: 0.5em;
 }
 
+/*
+$back-c: #BFACC8;
+$color-c: #4A4063;
+*/
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -103,12 +107,13 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #BFACC8;
-  color: #4A4063;
+  background-color: #0B132B;
+  color: #5BC0BE;
+  padding: 20px;
 }
 
 .section-c .section-title {
-  color: #4A4063;
+  color: #5BC0BE;
 }
 
 .next-step {

@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, render_template, session
+from flask import Flask, url_for, redirect, request, render_template, session
 from werkzeug.utils import secure_filename
 
 from sortigo.builder import build_animation
@@ -19,7 +19,11 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.mkdir(app.config['UPLOAD_FOLDER'])
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
+def got_to_home():
+    return redirect('/step1')
+
+@app.route('/step1', methods=['GET', 'POST'])
 def home():
     form = ImageUploaderForm(CombinedMultiDict((request.files, request.form)), meta={'csrf': False})
 
@@ -36,7 +40,7 @@ def home():
             f.save(image_path)
             anim = build_animation(image_path, settings, code, 'mp4', app.config['UPLOAD_FOLDER'])
             session['result'] = dict(image=name, anim=anim, settings=settings)
-            return 'processed'
+            return redirect('/step2')
         else:
             print(form.errors)
             print('validation failed')
@@ -44,9 +48,12 @@ def home():
     return render_template('step1.html', form=form)
 
 
-@app.route('/then', methods=['GET'])
-def then():
-    return 'hello'
+@app.route('/step2', methods=['GET'])
+def results_view():
+    return render_template('step2.html',
+                           user_image=session['result']['image'],
+                           result_video=session['result']['anim'],
+                           settings=session['result']['settings'])
 
 
 if __name__ == "__main__":

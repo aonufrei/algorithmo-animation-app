@@ -1,0 +1,124 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #5BC0BE;
+}
+
+body {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #1C2541;
+}
+
+.result-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.result-container img,
+.result-container video {
+  width: 40%;
+  margin: 20px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.753);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.753);
+}
+
+.results-table {
+  font-size: 1em;
+  padding: 20px;
+  background: #0B132B;
+  border-radius: 20px;
+  margin: 100px 0;
+}
+
+.section-title {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.808);
+}
+
+.btn {
+  text-decoration: none;
+  color: #5BC0BE;
+  padding: 1.5em;
+}
+
+.return-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #3A506B;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.return-btn i {
+  border: solid #6FFFE9;
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 5px;
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+
+.download-btn {
+  background-color: #3A506B;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 999px;
+}
+
+@media screen and (max-width: 900px) {
+  .result-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .result-container img,
+  .result-container video {
+    width: 80%;
+    margin: 1em;
+  }
+  .results-table {
+    margin-top: 0;
+  }
+}
+/*# sourceMappingURL=step2.css.map */

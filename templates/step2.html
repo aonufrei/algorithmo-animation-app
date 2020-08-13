@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block imports %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/step2.css') }}">
+{% endblock %}
+
+{% block title %}Step 2: View the results{% endblock %}
+
+{% block content %}
+    <h1 class="section-title">View the results</h1>
+    <section class="result-container">
+        <img src="{{ url_for('static', filename='uploads/'+user_image) }}" alt="User Image">
+        <video controls>
+            <source src="{{ url_for('static', filename='uploads/'+result_video) }}" type='video/mp4'>
+        </video>
+    </section>
+    <table class='results-table'>
+        
+        <tr>
+            <td>Input image size:</td>
+            <td>{{ settings['image_width'] }}x{{ settings['image_height'] }}</td>
+        </tr>
+        <tr>
+            <td>Division:</td>
+            <td>{{ settings['columns'] }} columns x{{ settings['rows'] }} rows</td>
+        </tr>
+        <tr>
+            <td>Algorithm:</td>
+            <td>{{ settings['algorithm'] }}</td>
+        </tr>
+    </table>
+     
+    <a class="btn return-btn" href="/">
+        <i></i>
+    </a>
+    <a class="btn download-btn">Download Animation</a>
+
+{% endblock %}
