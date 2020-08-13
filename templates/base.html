@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lemonada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block imports %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>  
 
+    <header>
+        <a id='logo-primary' href='/'>Sort<span id='logo-last'>Anim</span></a>
+    </header>
+
     {% block content %}{% endblock %}
+
+    {% block scripts %}{% endblock %}
     
 </body>
 </html>

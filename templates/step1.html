@@ -1,26 +1,64 @@
 {% extends 'base.html' %}
+
+{% block imports%}
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/step1.css')}}">
+{% endblock %}
+
 {% block title %}Step 1: Load data{% endblock %}
 
 {% block content %}
-    <section class='section-a'>
-        <form method='POST' id='upload_form' class="form-container" enctype="multipart/form-data">
-            <h1>Please, fill the form below</h1>
-            <label>Number of columns: <input type="number" name="image_columns" value=10 min=10 max=50 step=10></label>
-            <label>Number of rows: <input type="number" name="image_rows" value=10 min=10 max=50 step=10></label>
-            {{'*' + form.image_columns.errors[0] if form.image_columns.errors[0]}}
-            {{'*' + form.image_rows.errors[0] if form.image_rows.errors[0]}}
+<form method='POST' id='upload_form' class="form-container" enctype="multipart/form-data">
+    <h1 class='section-title'>Please, fill the form below</h1>
+    <table>
 
-            <label>Algorithm: 
-            <select name="algorithm">
-                <option value="Bubble">bubble</option>
-              </select>
-            </label>
-            {{'*' + form.algorithm.errors[0] if form.algorithm.errors[0] == '' or form.algorithm.errors[0] == None }}
-            
-            <label>Image: <input type="file" name="user_image"><label class='error-label'>{{'*' + form.user_image.errors[0] if form.user_image.errors[0]}}</label></label>
-            
-            <input type="submit" value="Get Animation">
-        </form>
+        <tr>
+            <td><label class="value-label">Number of columns: (between 10 and 50)</label></td>
+            <td><input class="value-input" type="number" name="image_columns" value=10 min=10 max=50></td>
+        </tr>
+        <tr>
+            <td><label class="value-label">Number of rows: (between 10 and 50)</label></td>
+            <td><input class="value-input"type="number" name="image_rows" value=10 min=10 max=50></td>
+        </tr>
+        <tr>
+            <td><label class="value-label">Choose algorithm for animation:</label></td>
+            <td>
+                <select class="value-input" name="algorithm">
+                    <option value="Bubble">Bubble</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="value-label">Choose image for animation: *</label></td>
+            <td><input class="value-input value-file"  type="file" id="user_image" name="user_image" accept="image/*"></td>
+        </tr>
+    </table>
 
+
+    <section class="error-section" id="error_section">
+        {{'*' + form.image_columns.errors[0] if form.image_columns.errors[0]}}
+        {{'*' + form.image_rows.errors[0] if form.image_rows.errors[0]}}
+        {{'*' + form.algorithm.errors[0] if form.algorithm.errors[0] == '' or form.algorithm.errors[0] == None}}
     </section>
+
+    <input type="submit" class="submit-btn" value="Get Animation">
+</form>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="text/javascript">
+        let errorSection = document.getElementById('error_section');
+
+        if(errorSection.hasChildNodes()){
+            errorSection.style.display = 'block';
+        } else{
+            errorSection.style.display = 'none';
+        }
+
+    </script>
+
+
+
 {% endblock %}
