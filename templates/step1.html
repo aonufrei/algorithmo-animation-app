@@ -17,7 +17,7 @@
             </label>
             {{'*' + form.algorithm.errors[0] if form.algorithm.errors[0] == '' or form.algorithm.errors[0] == None }}
             
-            <label>Image: <input type="file" name="user_image"><label class='error-label'>{{'*' + form.image_width.errors[0] if form.image_width.errors[0]}}</label></label>
+            <label>Image: <input type="file" name="user_image"><label class='error-label'>{{'*' + form.user_image.errors[0] if form.user_image.errors[0]}}</label></label>
             
             <input type="submit" value="Get Animation">
         </form>
