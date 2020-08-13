@@ -22,13 +22,13 @@
         </tr>
         <tr>
             <td>Algorithm:</td>
-            <td>{{ settings['algorithm'] }}</td>
+            <td>{{ settings['algorithm'] }} sort</td>
         </tr>
     </table>
      
     <a class="btn return-btn" href="/">
         <i></i>
     </a>
-    <a class="btn download-btn">Download Animation</a>
+    <a href="{{url_for('download_file')}}" class="btn download-btn">Download Animation</a>
 
 {% endblock %}

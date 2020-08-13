@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, request, render_template, session
+from flask import Flask, url_for, send_file, redirect, request, render_template, session
 from werkzeug.utils import secure_filename
 
 from sortigo.builder import build_animation
@@ -51,6 +51,11 @@ def results_view():
                            result_video=session['result']['anim'],
                            settings=session['result']['settings'])
 
+
+@app.route('/download', methods=['GET'])
+def download_file():
+    path = os.path.join(app.config['UPLOAD_FOLDER'], session['result']['anim'])
+    return send_file(path, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)
