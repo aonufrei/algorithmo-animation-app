@@ -41,9 +41,6 @@ def home():
             anim = build_animation(image_path, settings, code, 'mp4', app.config['UPLOAD_FOLDER'])
             session['result'] = dict(image=name, anim=anim, settings=settings)
             return redirect('/step2')
-        else:
-            print(form.errors)
-            print('validation failed')
 
     return render_template('step1.html', form=form)
 
