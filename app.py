@@ -29,8 +29,7 @@ def home():
 
     if request.method == 'POST':
         if form.validate_on_submit():
-            settings = dict(image_height=form.image_height.data, image_width=form.image_width.data,
-                            columns=form.image_columns.data, rows=form.image_rows.data,
+            settings = dict(columns=form.image_columns.data, rows=form.image_rows.data,
                             algorithm=form.algorithm.data)
 
             code = datetime.now().strftime('%d%m%Y%H%M%S')

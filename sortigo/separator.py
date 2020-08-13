@@ -30,13 +30,7 @@ class Separator:
         self.check_int_variable_type(self.rows)
         self.check_if_none(self.rows)
         
-        self.image_width = settings['image_width']
-        self.check_int_variable_type(self.image_width)
-        self.check_if_none(self.image_width)
-
-        self.image_height = settings['image_height']
-        self.check_int_variable_type(self.image_height)
-        self.check_if_none(self.image_height)
+        self.image_width, self.image_height = self.image.size
         
         self.segment_width = self.image_width // self.columns
         self.segment_height = self.image_height // self.rows
