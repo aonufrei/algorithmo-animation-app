@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block website_meta %}
+    <meta name="description" content="This website allows you to create wonderful animation videos from image using sorting algorithms. Just select sorting algorithm and press 'Get animation' button.">
+    <meta name="keywords" content="Sorting, Algorithms, Image, Animation">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Artem Onufrei">
+{% endblock %}
+
+
+{% block imports%}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+{% endblock %}
+
+{% block title %}Welcome to SortAnim{% endblock %}
+
+{% block content %}
+
+    <div class="info-container">
+        <h1>Welcome to SortAnim</h1>
+        <p>Here you can create animation from image according to sorting algorithm you choose.</p>
+        <a class='arrow-btn' href='home/step1'><label>Try now</label> <i></i></a>
+    </div>
+
+    
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

@@ -1,4 +1,5 @@
 @import 'colors';
+@import 'arrow_btn';
 
 *{
     box-sizing: border-box;
@@ -39,18 +40,9 @@ body{
 
     }
 
-    .submit-btn{
-        border: none;
-        border-radius: 15px;
-        color: white;
-        font-size: 16px;
-        padding: 1em;
-        background-color: $color4;
-        transition: .5s all;
-
-        &:hover{
-            background-color: $color3;
-        }
+    .arrow-btn{
+        width: 100%;
+        margin: 0 auto;
     }
 
     .section-title{
@@ -112,7 +104,7 @@ table tr{
 
   }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
 
     body{
         display: flex;
@@ -138,6 +130,10 @@ table tr{
         .submit-btn{
             background-color: $color4;
         }
+    }
+
+    table{
+        margin-bottom: 0px;
     }
 
 

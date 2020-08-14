@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
-{% block imports%}
+{% block website_meta %}
+    <meta name="description" content="This website allows you to create wonderful animation videos from image using sorting algorithms. Just select sorting algorithm and press 'Get animation' button.">
+    <meta name="keywords" content="Sorting, Algorithms, Image, Animation">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Artem Onufrei">
+{% endblock %}
 
+
+{% block imports%}
     <link rel="stylesheet" href="{{url_for('static', filename='css/step1.css')}}">
 {% endblock %}
 
@@ -41,14 +48,18 @@
         {{'*' + form.algorithm.errors[0] if form.algorithm.errors[0] == '' or form.algorithm.errors[0] == None}}
     </section>
 
-    <input type="submit" class="submit-btn" value="Get Animation">
+    <a class='arrow-btn' id='submit_link'><label>Get Animation</label> <i></i></a>
 </form>
 
 {% endblock %}
 
 
 {% block scripts %}
+
     <script type="text/javascript">
+        document.getElementById("submit_link").onclick = function() {
+            document.getElementById("upload_form").submit();
+        }
         let errorSection = document.getElementById('error_section');
 
         if(errorSection.hasChildNodes()){
@@ -58,7 +69,4 @@
         }
 
     </script>
-
-
-
 {% endblock %}

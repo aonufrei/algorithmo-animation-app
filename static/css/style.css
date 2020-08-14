@@ -40,4 +40,20 @@ header #logo-primary:hover {
 header #logo-primary:hover #logo-last {
   color: white;
 }
+
+#copyright {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.486);
+  font-size: 12px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 5px;
+}
+
+#copyright:hover {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  color: #6FFFE9;
+}
 /*# sourceMappingURL=style.css.map */

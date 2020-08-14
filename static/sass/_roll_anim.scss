@@ -1,0 +1,13 @@
+@mixin roll_anim($angle1, $angle2){
+
+    @keyframes roll{
+        0%{
+            transform: rotate($angle1);
+        }
+    
+        100%{
+            transform: rotate($angle2);
+        }
+    }
+
+}

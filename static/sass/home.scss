@@ -1,0 +1,68 @@
+@import 'colors';
+@import 'arrow_btn';
+
+*{
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1.2;
+}
+
+body{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color1;
+    height: 100vh;
+}
+
+
+.info-container{
+    
+    border-radius: 15px;
+    background-color: $color2;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.705);
+    padding: 15px;
+    color: white;
+
+    h1{
+        margin: 20px 0;
+
+    }
+
+    p{
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+}
+
+@media screen and (max-width: 750px) {
+
+    .info-container{
+        background-color: $color1;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        border-radius: 0;
+        height: 100vh;
+
+        h1{
+            font-size: 1.8em;
+            margin-bottom: 40px;
+        }
+
+        p{
+            width: 95%;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+    }
+    .arrow-btn{
+        width: 100%;
+    }
+
+}

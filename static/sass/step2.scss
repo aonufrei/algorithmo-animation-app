@@ -1,4 +1,7 @@
 @import 'colors';
+@import 'roll_anim';
+
+@include roll_anim(0, 360deg);
 
 *{
   box-sizing: border-box;
@@ -31,7 +34,7 @@ body{
 
 .results-table{
   color: white;
-  font-size: 14px;
+  font-size: 18px;
   padding: 20px; 
   background: $color1;
   border-radius: 20px;
@@ -63,24 +66,34 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 1s all;
 
   i{
-    border: solid $color5;
+    border: solid white;
     border-width: 0 4px 4px 0;
     display: inline-block;
     padding: 5px;
     transform: rotate(135deg);
 
   }
+  &:hover{
+    animation: roll 1s;
+    background-color: $color4;
+  }
 }
 
 .download-btn{
-  background-color: $color4;
+  background-color: $color3;
   color: white;
   position: fixed;
   bottom: 20px;
   right: 20px;
   border-radius: 999px;
+  transition: 0.5s all;
+
+  &:hover{
+    background-color: $color4;
+  }
 }
 
 @media screen and (max-width: 900px) {

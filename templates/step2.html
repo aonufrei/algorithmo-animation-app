@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block website_meta %}
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="author" content="Artem Onufrei">
+{% endblock %}
+
+
 {% block imports %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/step2.css') }}">
 {% endblock %}
@@ -26,7 +32,7 @@
         </tr>
     </table>
      
-    <a class="btn return-btn" href="/">
+    <a class="btn return-btn" href="/home/step1">
         <i></i>
     </a>
     <a href="{{url_for('download_file')}}" class="btn download-btn">Download Animation</a>

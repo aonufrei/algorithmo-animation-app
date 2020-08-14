@@ -21,10 +21,14 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 
 @app.route('/', methods=['GET'])
 def got_to_home():
-    return redirect('/step1')
+    return redirect('/home')
 
-@app.route('/step1', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET'])
 def home():
+    return render_template('home.html')
+
+@app.route('/home/step1', methods=['GET', 'POST'])
+def file_upload():
     form = ImageUploaderForm(CombinedMultiDict((request.files, request.form)), meta={'csrf': False})
 
     if request.method == 'POST':
@@ -39,12 +43,12 @@ def home():
             f.save(image_path)
             anim = build_animation(image_path, settings, code, 'mp4', app.config['UPLOAD_FOLDER'])
             session['result'] = dict(image=name, anim=anim, settings=settings)
-            return redirect('/step2')
+            return redirect('/home/step2')
 
     return render_template('step1.html', form=form)
 
 
-@app.route('/step2', methods=['GET'])
+@app.route('/home/step2', methods=['GET'])
 def results_view():
     return render_template('step2.html',
                            user_image=session['result']['image'],
@@ -52,7 +56,7 @@ def results_view():
                            settings=session['result']['settings'])
 
 
-@app.route('/download', methods=['GET'])
+@app.route('/home/step2/download', methods=['GET'])
 def download_file():
     path = os.path.join(app.config['UPLOAD_FOLDER'], session['result']['anim'])
     return send_file(path, as_attachment=True)

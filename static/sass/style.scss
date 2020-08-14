@@ -23,9 +23,6 @@ header{
             color: $color5;
             transition: 1s all;
         }
-
-
-
         &:hover{
             color: $color5;
             
@@ -37,4 +34,21 @@ header{
     }
 
 
+
+}
+
+
+#copyright{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.486);
+    font-size: 12px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+
+    &:hover{
+        text-decoration-line: underline;
+        color: $color5;
+    }
 }
