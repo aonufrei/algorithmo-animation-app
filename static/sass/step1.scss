@@ -73,7 +73,42 @@ body{
         }
     }
 
+    .value-file-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.7em;
+        background-color: $color3;
+        transition: .8s all;
+        cursor: pointer;
+
+        .value-file-icon{
+            margin-right: 1.2em;
+            transition: .8s all;
+        }
+        .value-file-label{
+            margin-right: 1.5em;
+            color:white;
+            transition: .8s all;
+            cursor: pointer;
+        }
+
+        &:hover{
+            background-color: $color4;
+            border-radius: 5px;
+            
+            .value-file-icon{
+                fill: $color1;
+            }
+            .value-file-label{
+                color: $color1;
+            }
+
+        }
+    }
+
     .value-file{
+        display: none;
         cursor: pointer;
         border: 1px dashed $color4;
     }

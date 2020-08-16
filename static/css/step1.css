@@ -171,7 +171,52 @@ body {
   font-size: 18px;
 }
 
+.form-container .value-file-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.7em;
+  background-color: #3A506B;
+  -webkit-transition: .8s all;
+  transition: .8s all;
+  cursor: pointer;
+}
+
+.form-container .value-file-btn .value-file-icon {
+  margin-right: 1.2em;
+  -webkit-transition: .8s all;
+  transition: .8s all;
+}
+
+.form-container .value-file-btn .value-file-label {
+  margin-right: 1.5em;
+  color: white;
+  -webkit-transition: .8s all;
+  transition: .8s all;
+  cursor: pointer;
+}
+
+.form-container .value-file-btn:hover {
+  background-color: #5BC0BE;
+  border-radius: 5px;
+}
+
+.form-container .value-file-btn:hover .value-file-icon {
+  fill: #0B132B;
+}
+
+.form-container .value-file-btn:hover .value-file-label {
+  color: #0B132B;
+}
+
 .form-container .value-file {
+  display: none;
   cursor: pointer;
   border: 1px dashed #5BC0BE;
 }

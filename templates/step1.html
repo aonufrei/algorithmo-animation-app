@@ -39,17 +39,15 @@
             <tr>
                 <td><label class="value-label">Choose image for animation: {% for error in form.user_image.errors[0:1] %}<li class='error-point'>{{error}}</li>{% endfor %}</label></td>
                 <td>
-                    <!--
-                    <label for="user_image" style="display: flex; justify-content: center; align-items: center; padding: 0 20px; color:white;" class="value-input value-file">
-                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cloud-arrow-up" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <label for="user_image" class="value-input value-file-btn">
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cloud-arrow-up value-file-icon" fill="white" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
                             <path fill-rule="evenodd" d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z"/>
                         </svg>
-                        Load Image
-                        
+                        <label for="user_image" class='value-file-label'>Load Image</label>
+                        <input class="value-file" type="file" id="user_image" name="user_image" accept="image/*">
                     </label>
-                    -->
-                    <input class="value-input value-file" type="file" id="user_image" name="user_image" accept="image/*">
+                
                 </td>
             </tr>
         </table>
@@ -66,10 +64,45 @@
 {% block scripts %}
 
     <script type="text/javascript">
+        //simulate submit for a
         document.getElementById("submit_link").onclick = function() {
             document.getElementById("upload_form").submit();
         }
-        
+
+        //function to remove errors
+        function removeErrors(){
+            let errors = document.getElementsByClassName('error-point');
+            for(let index = 0; index < errors.length; index++){
+                errors[index].remove();
+            }
+        }
+
+        //function to process filename if it is to big
+        function fixFilename(filename, limit){
+            let fixedName = filename;
+            if(filename.length > limit){
+                fixedName = filename.slice(0, limit-3) + '...'; 
+            }
+
+            return fixedName;
+        }
+
+        //change input[type=file] label
+        let fileInputText = 'Load Image';
+        let fileInput = document.getElementById("user_image");
+        console.log(fileInputText)
+        let fileInputFile = document.getElementsByClassName("value-file-label")[0];
+
+        fileInput.onchange = function(){
+            if( fileInput.files.length != 0 ){
+                let uploadedFile = fileInput.files[0].name;
+                fileInputFile.innerHTML = fixFilename(uploadedFile, fileInputText.length);
+            } else{
+                fileInputFile.innerHTML = fileInputText;
+            }
+            removeErrors();
+        }
+
     </script>
 
 {% endblock %}
