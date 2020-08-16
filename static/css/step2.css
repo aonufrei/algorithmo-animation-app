@@ -1,3 +1,4 @@
+/* color palette */
 @-webkit-keyframes roll {
   0% {
     -webkit-transform: rotate(0);
@@ -8,7 +9,6 @@
             transform: rotate(360deg);
   }
 }
-
 @keyframes roll {
   0% {
     -webkit-transform: rotate(0);
@@ -66,6 +66,10 @@ body {
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.753);
 }
 
+.result-container video:focus {
+  outline: none;
+}
+
 .results-table {
   color: white;
   font-size: 18px;
@@ -87,6 +91,12 @@ body {
   text-decoration: none;
   color: #5BC0BE;
   padding: 1.5em;
+  -webkit-box-shadow: 0 0 10px #000000be;
+          box-shadow: 0 0 10px #000000be;
+}
+
+.btn:hover {
+  background-color: #5BC0BE;
 }
 
 .return-btn {
@@ -122,7 +132,6 @@ body {
 .return-btn:hover {
   -webkit-animation: roll 1s;
           animation: roll 1s;
-  background-color: #5BC0BE;
 }
 
 .download-btn {
@@ -134,10 +143,6 @@ body {
   border-radius: 999px;
   -webkit-transition: 0.5s all;
   transition: 0.5s all;
-}
-
-.download-btn:hover {
-  background-color: #5BC0BE;
 }
 
 @media screen and (max-width: 900px) {

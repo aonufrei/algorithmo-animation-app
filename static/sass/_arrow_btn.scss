@@ -2,6 +2,7 @@
 @import 'roll_anim';
 
 @include roll_anim(45deg, 405deg);
+@include unroll_anim(405deg, 45deg);
 
 .arrow-btn{
     display: flex;
@@ -15,6 +16,7 @@
     background-color: $color3;
     transition: .5s all;
     text-decoration: none;
+    box-shadow: 0 0 10px #000000be;
     
     i{
         margin: 0;
@@ -22,13 +24,13 @@
         border-width: 4px 4px 0 0;
         padding: 10px;
         transform: rotate(45deg);
-        translate: 1s all;
+        animation: unroll .8s;
     }
 
     &:hover{
         background-color: $color4;
         i{
-            animation: roll 1s;
+            animation: roll .8s;
         }
     }
 }

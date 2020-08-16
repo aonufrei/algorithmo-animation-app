@@ -30,7 +30,7 @@ def home():
 @app.route('/home/step1', methods=['GET', 'POST'])
 def file_upload():
     form = ImageUploaderForm(CombinedMultiDict((request.files, request.form)), meta={'csrf': False})
-
+    validation_failed = False
     if request.method == 'POST':
         if form.validate_on_submit():
             settings = dict(columns=form.image_columns.data, rows=form.image_rows.data,
@@ -44,8 +44,10 @@ def file_upload():
             anim = build_animation(image_path, settings, code, 'mp4', app.config['UPLOAD_FOLDER'])
             session['result'] = dict(image=name, anim=anim, settings=settings)
             return redirect('/home/step2')
+        else:
+            validation_failed = True
 
-    return render_template('step1.html', form=form)
+    return render_template('step1.html', form=form, failed=validation_failed)
 
 
 @app.route('/home/step2', methods=['GET'])

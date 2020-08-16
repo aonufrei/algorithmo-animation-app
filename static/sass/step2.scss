@@ -30,6 +30,10 @@ body{
     margin: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.753);
   }
+
+  video:focus{
+    outline: none;
+  }
 }
 
 .results-table{
@@ -52,6 +56,12 @@ body{
   text-decoration: none;
   color: $color4;
   padding: 1.5em;
+  box-shadow: 0 0 10px #000000be;
+
+  &:hover{
+    background-color: $color4;
+  }
+
 }
 
 .return-btn{
@@ -78,7 +88,6 @@ body{
   }
   &:hover{
     animation: roll 1s;
-    background-color: $color4;
   }
 }
 
@@ -90,10 +99,6 @@ body{
   right: 20px;
   border-radius: 999px;
   transition: 0.5s all;
-
-  &:hover{
-    background-color: $color4;
-  }
 }
 
 @media screen and (max-width: 900px) {

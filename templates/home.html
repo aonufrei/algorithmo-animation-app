@@ -8,7 +8,7 @@
 {% endblock %}
 
 
-{% block imports%}
+{% block imports%}=
     <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
 {% endblock %}
 
@@ -16,11 +16,11 @@
 
 {% block content %}
 
-    <div class="info-container">
+    <section class="info-container">
         <h1>Welcome to SortAnim</h1>
         <p>Here you can create animation from image according to sorting algorithm you choose.</p>
         <a class='arrow-btn' href='home/step1'><label>Try now</label> <i></i></a>
-    </div>
+    </section>
 
     
 {% endblock %}
