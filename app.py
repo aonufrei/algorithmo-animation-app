@@ -1,4 +1,4 @@
-from flask import Flask, url_for, send_file, redirect, request, render_template, session
+from flask import Flask, send_file, redirect, request, render_template, session
 from werkzeug.utils import secure_filename
 
 from sortigo.builder import build_animation
@@ -19,6 +19,31 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.mkdir(app.config['UPLOAD_FOLDER'])
 
 
+def clean_uploads():
+    files = [f for f in os.listdir(app.config['UPLOAD_FOLDER']) if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], f))]
+    for filepath in files:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
+
+def check_session():
+    exist = False
+    
+    if session['result'] != None:
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], session['result']['image'])
+        anim_path  = os.path.join(app.config['UPLOAD_FOLDER'], session['result']['anim'])
+        
+        exist = os.path.exists(image_path) and os.path.exists(anim_path)
+    
+    return exist
+
+def clean_session():
+    try:
+        if session['result'] != None:
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], session['result']['image']))
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], session['result']['anim']))
+            session['result'] = None
+    except FileNotFoundError:
+        pass
+
 @app.route('/', methods=['GET'])
 def got_to_home():
     return redirect('/home')
@@ -33,6 +58,7 @@ def file_upload():
     validation_failed = False
     if request.method == 'POST':
         if form.validate_on_submit():
+            clean_session()
             settings = dict(columns=form.image_columns.data, rows=form.image_rows.data,
                             algorithm=form.algorithm.data)
 
@@ -52,6 +78,9 @@ def file_upload():
 
 @app.route('/home/step2', methods=['GET'])
 def results_view():
+    if not check_session():
+        return redirect('/home/step1')
+
     return render_template('step2.html',
                            user_image=session['result']['image'],
                            result_video=session['result']['anim'],
@@ -61,7 +90,14 @@ def results_view():
 @app.route('/home/step2/download', methods=['GET'])
 def download_file():
     path = os.path.join(app.config['UPLOAD_FOLDER'], session['result']['anim'])
-    return send_file(path, as_attachment=True)
+    if os.path.exists(path):
+        return send_file(path, as_attachment=True)
+    else:
+        return redirect('/home/step1')
+
+
+
 
 if __name__ == "__main__":
+    clean_uploads()
     app.run(debug=True)
