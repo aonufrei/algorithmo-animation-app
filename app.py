@@ -2,6 +2,9 @@ from flask import Flask, send_file, redirect, request, render_template, session
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 
+from PIL import UnidentifiedImageError
+
+from sortigo.exceptions import *
 from sortigo.builder import build_animation
 
 import os, threading
@@ -74,7 +77,14 @@ def file_upload():
             name = code + secure_filename(f.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
             f.save(image_path)
-            anim = build_animation(image_path, settings, code, 'webm', app.config['UPLOAD_FOLDER'])
+            try:
+                anim = build_animation(image_path, settings, code, 'webm', app.config['UPLOAD_FOLDER'])
+            except UnidentifiedImageError:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], image_path))
+                return render_template('error.html', error_title='Image error', error_message='Your image file is bad. Try other image')
+            except Exception: 
+                return render_template('error.html', error_title='Settings', error_message="You've passed bad settings for aniomaton. Try to change it")
+
             session['result'] = dict(image=name, anim=anim, settings=settings)
             threading.Timer(uploads_delete_timeout, clean_session, args=[session['result']]).start()
             return redirect('/home/step2')
@@ -103,9 +113,6 @@ def download_file():
         return send_file(path, as_attachment=True)
     else:
         return redirect('/home/step1')
-
-
-
 
 if __name__ == "__main__":
     clean_uploads()

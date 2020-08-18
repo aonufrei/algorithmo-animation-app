@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block imports%}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+{% endblock %}
+
+{% block title %}Error: {{error_title}}{% endblock %}
+
+{% block content %}
+
+    <section class="info-container">
+        <h1>{{error_title}}</h1>
+        <p>{{error_message}}</p>
+        <a class='arrow-btn' href='/home/step1'><label>Try Again</label> <i></i></a>
+    </section>
+
+    
+{% endblock %}
