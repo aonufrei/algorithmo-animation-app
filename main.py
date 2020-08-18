@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                            os.path.join('static', 'uploads'))
-app.config['SECRET_KEY'] = 'secret key'
+app.config['SECRET_KEY'] = 'asdflkajsg23r11r1r3lkasdfadfasdf'
 
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.mkdir(app.config['UPLOAD_FOLDER'])
@@ -115,5 +115,5 @@ def download_file():
 
 if __name__ == "__main__":
     clean_uploads()
-    app.run(host='127.0.0.1', port=8080)
+    app.run(host='0.0.0.0')
     csrf.init_app(app)
