@@ -4,7 +4,6 @@ from werkzeug.utils import secure_filename
 
 from PIL import UnidentifiedImageError
 
-from sortigo.exceptions import *
 from sortigo.builder import build_animation
 
 import os, threading
@@ -116,5 +115,5 @@ def download_file():
 
 if __name__ == "__main__":
     clean_uploads()
-    app.run(debug=True)
+    app.run()
     csrf.init_app(app)
