@@ -47,6 +47,7 @@ def clean_session(ses):
     except Exception:
         pass
 
+
 @app.route('/', methods=['GET'])
 def got_to_home():
     return redirect('/home')
@@ -75,6 +76,7 @@ def file_upload():
             f.save(image_path)
             anim = build_animation(image_path, settings, code, 'webm', app.config['UPLOAD_FOLDER'])
             session['result'] = dict(image=name, anim=anim, settings=settings)
+            threading.Timer(uploads_delete_timeout, clean_session, args=[session['result']]).start()
             return redirect('/home/step2')
         else:
             validation_failed = True
@@ -90,7 +92,8 @@ def results_view():
     return render_template('step2.html',
                            user_image=session['result']['image'],
                            result_video=session['result']['anim'],
-                           settings=session['result']['settings'])
+                           settings=session['result']['settings'],
+                           timer=uploads_delete_timeout)
 
 
 @app.route('/home/step2/download', methods=['GET'])

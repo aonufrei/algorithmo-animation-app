@@ -38,3 +38,16 @@
     <a href="{{url_for('download_file')}}" class="btn download-btn">Download Animation</a>
 
 {% endblock %}
+
+{% block scripts %}
+    <script>
+        let timer = {{timer}}
+        console.log(timer)
+        
+        function redirectTimer(){
+            window.location.replace("/home/step1");
+        }
+
+        window.setTimeout(redirectTimer, timer*1000);
+    </script>
+{% endblock %}

@@ -74,9 +74,8 @@ def build_animation(image_path: str, settings: dict, video_name: str, extention:
     for row in sep.row_arrays:
         steps.append(algorithm.get_all_iterations(row))
 
-    print((len(sep.row_arrays) * len(steps[0])))
     out = cv2.VideoWriter(os.path.join(output, result_video), cv2.VideoWriter_fourcc(*'VP80'),
-                           29 // duration, (sep.image_width, sep.image_height))    
+                           15, (sep.image_width, sep.image_height))    
 
     def add_frame(frame, repeat=1):
         for x in range(repeat):
