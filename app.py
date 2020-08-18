@@ -1,14 +1,20 @@
 from flask import Flask, send_file, redirect, request, render_template, session
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 
 from sortigo.builder import build_animation
 
-import os
+import os, threading
 from datetime import datetime
 
 from forms import ImageUploaderForm
 from werkzeug.datastructures import CombinedMultiDict
 
+
+uploads_delete_timeout = 60*5
+
+
+csrf = CSRFProtect()
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -17,7 +23,6 @@ app.config['SECRET_KEY'] = 'secret key'
 
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.mkdir(app.config['UPLOAD_FOLDER'])
-
 
 def clean_uploads():
     files = [f for f in os.listdir(app.config['UPLOAD_FOLDER']) if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], f))]
@@ -35,13 +40,11 @@ def check_session():
     
     return exist
 
-def clean_session():
+def clean_session(ses):
     try:
-        if session['result'] != None:
-            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], session['result']['image']))
-            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], session['result']['anim']))
-            session['result'] = None
-    except FileNotFoundError:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], ses['image']))
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], ses['anim']))
+    except Exception:
         pass
 
 @app.route('/', methods=['GET'])
@@ -54,11 +57,14 @@ def home():
 
 @app.route('/home/step1', methods=['GET', 'POST'])
 def file_upload():
-    form = ImageUploaderForm(CombinedMultiDict((request.files, request.form)), meta={'csrf': False})
+    form = ImageUploaderForm(CombinedMultiDict((request.files, request.form)))
     validation_failed = False
     if request.method == 'POST':
         if form.validate_on_submit():
-            clean_session()
+            try:
+                clean_session(session['result'])
+            except Exception:
+                pass
             settings = dict(columns=form.image_columns.data, rows=form.image_rows.data,
                             algorithm=form.algorithm.data)
 
@@ -67,7 +73,7 @@ def file_upload():
             name = code + secure_filename(f.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
             f.save(image_path)
-            anim = build_animation(image_path, settings, code, 'mp4', app.config['UPLOAD_FOLDER'])
+            anim = build_animation(image_path, settings, code, 'webm', app.config['UPLOAD_FOLDER'])
             session['result'] = dict(image=name, anim=anim, settings=settings)
             return redirect('/home/step2')
         else:
@@ -101,3 +107,4 @@ def download_file():
 if __name__ == "__main__":
     clean_uploads()
     app.run(debug=True)
+    csrf.init_app(app)

@@ -63,9 +63,6 @@ def build_animation(image_path: str, settings: dict, video_name: str, extention:
 
     result_video = video_name + '.' + extention
 
-    out = cv2.VideoWriter(os.path.join(output, result_video), cv2.VideoWriter_fourcc(*'X264'),
-                          30, (sep.image_width, sep.image_height))
-
     algorithm = None
     if settings['algorithm'] == "Bubble":
         algorithm = BubbleSemiSort()
@@ -77,20 +74,24 @@ def build_animation(image_path: str, settings: dict, video_name: str, extention:
     for row in sep.row_arrays:
         steps.append(algorithm.get_all_iterations(row))
 
+    print((len(sep.row_arrays) * len(steps[0])))
+    out = cv2.VideoWriter(os.path.join(output, result_video), cv2.VideoWriter_fourcc(*'VP80'),
+                           29 // duration, (sep.image_width, sep.image_height))    
+
     def add_frame(frame, repeat=1):
         for x in range(repeat):
             opencv_image = cv2.cvtColor(numpy.array(frame), cv2.COLOR_RGB2BGR)
             out.write(opencv_image)
     
     frame = build_frame(sep)
-    add_frame(frame, repeat=5)
+    add_frame(frame)
 
     for phase in range(len(steps[0])):
         for row in range(len(sep.row_arrays)):
             sep.row_arrays[row] = steps[row][phase]
         frame = build_frame(sep)
-        repeat_rate = duration*30 // sep.columns
-        add_frame(frame, repeat=repeat_rate if phase != len(steps[0])-1 else repeat_rate*2)
+        #repeat_rate = duration*30 // sep.columns
+        add_frame(frame)#,#repeat_rate if phase != len(steps[0])-1 else repeat_rate*2)
     out.release()
 
     print('It tooks ' + str(time.time() - start_time))

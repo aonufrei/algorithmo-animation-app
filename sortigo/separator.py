@@ -55,7 +55,7 @@ class Separator:
 
     def shuffle_row_arrays(self): 
         from random import shuffle
-        for x in range(self.columns):
+        for x in range(self.rows):
             shuffle(self.row_arrays[x])
         #print(self.row_arrays)
 

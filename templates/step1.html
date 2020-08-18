@@ -17,6 +17,7 @@
 
 {% block content %}
     <form method='POST' id='upload_form' class="form-container" enctype="multipart/form-data">
+        {{ form.csrf_token }}
         <h1 class='section-title'>Please, fill the form below</h1>
         <table>
 
