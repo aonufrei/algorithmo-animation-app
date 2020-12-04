@@ -4,10 +4,12 @@ This is a flask application that enables you to transform your image into animat
 So the program splites your image into squares, shuffle them and start to sort parts. And so the animation comes in.
 
 ### How to run it?
-First of all you need to install and activate the virtual environment.  
+First of all you need to activate the virtual environment.
+
 Then you need to run:  
 `pip install -r 'requirements.txt'`.  
 This command will install all dependencies. 
+
 After that you need to run the program with:  
 `python main.py` for Windows or  
 `python3 main.py` for Linux/Mac OS  
