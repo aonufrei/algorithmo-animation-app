@@ -1,5 +1,5 @@
 # Project Algorithmo
-This is a flask application that enables you to transform your image into animation according to specific algorithm.
+This is a flask application that enables you to transform your image into animation according to specific sorting algorithm.
 
 So the program splites your image into squares, shuffle them and start to sort parts. And so the animation comes in.
 
