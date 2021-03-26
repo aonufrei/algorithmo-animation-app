@@ -14,4 +14,4 @@ After that you need to run the program with:
 `python main.py` for Windows or  
 `python3 main.py` for Linux/Mac OS  
   
-And thats all. No move to http://localhost:8080 and start making animations.
+And thats all. Move to http://localhost:8080 and start making animations.
